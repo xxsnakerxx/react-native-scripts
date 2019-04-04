@@ -1,0 +1,24 @@
+{
+  "name": "@xxsnakerxx/react-native-scripts",
+  "version": "1.0.0",
+  "description": "Helpful scripts for React Native projects",
+  "repository": "https://github.com/xxsnakerxx/react-native-scripts.git",
+  "author": "Dmitriy Kolesnikov <xxsnakerxx@gmail.com>",
+  "license": "MIT",
+  "bin": {
+    "rns-build-ios": "./bin/build-ios.js",
+    "rns-build-android": "./bin/build-android.js",
+    "rns-build-sourcemap": "./bin/build-sourcemap.js",
+    "rns-find-source": "./bin/find-source.js",
+    "rns-link-assets": "./bin/link-assets.js",
+    "rns-codepush": "./bin/codepush.js"
+  },
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "source-map": "^0.7.3",
+    "yargs": "^13.2.2"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0"
+  }
+}
