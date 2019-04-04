@@ -8,7 +8,7 @@ const { uniqBy } = require('lodash');
 const scriptName = 'rns-link-assets';
 
 require('yargs')
-  .usage(`Usage: ${scriptName} [options]`)
+  .usage(`Usage: yarn ${scriptName} [options]`)
   .version()
   .help('help')
   .wrap(null)

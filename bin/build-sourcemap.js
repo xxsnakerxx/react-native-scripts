@@ -8,7 +8,7 @@ const pkg = require(`${cwd}/package.json`);
 const scriptName = 'rns-build-sourcemap';
 
 const argv = require('yargs')
-  .usage(`Usage: ${scriptName} [options]`)
+  .usage(`Usage: yarn ${scriptName} [options]`)
   .option('f', {
     alias: 'folder',
     default: 'sourcemaps',

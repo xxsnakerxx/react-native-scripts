@@ -9,7 +9,7 @@ const pkg = require(`${cwd}/package.json`);
 const scriptName = 'rns-build-ios';
 
 const argv = require('yargs')
-  .usage(`Usage: ${scriptName} [options]`)
+  .usage(`Usage: yarn ${scriptName} [options]`)
   .option('teamId', {
     demandOption: true,
     type: 'string',

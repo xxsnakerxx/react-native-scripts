@@ -7,7 +7,7 @@ const chalk = require('chalk');
 const scriptName = 'rns-find-source';
 
 const argv = require('yargs')
-  .usage(`Usage: ${scriptName} [options]`)
+  .usage(`Usage: yarn ${scriptName} [options]`)
   .option('p', {
     alias: 'path',
     describe: 'path to sourcemap',

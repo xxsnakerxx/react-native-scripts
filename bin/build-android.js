@@ -10,7 +10,7 @@ const pkg = require(`${cwd}/package.json`);
 const scriptName = 'rns-build-android';
 
 const argv = require('yargs')
-  .usage(`Usage: ${scriptName} [options]`)
+  .usage(`Usage: yarn ${scriptName} [options]`)
   .option('t', {
       alias: 'type',
       demandOption: true,

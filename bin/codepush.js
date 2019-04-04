@@ -8,7 +8,7 @@ const scriptName = 'rns-codepush';
 let platforms = ['ios', 'android'];
 
 const argv = require('yargs')
-  .usage(`Usage: ${scriptName} [options] [code-push cli options]
+  .usage(`Usage: yarn ${scriptName} [options] [code-push cli options]
        run "code-push release-react --help" to see other available code-push options`)
   .option('app', {
     describe: 'app name',
