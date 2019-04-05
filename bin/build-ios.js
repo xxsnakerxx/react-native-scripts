@@ -77,7 +77,7 @@ try {
     'xcodebuild',
     `-scheme ${argv.scheme}`,
     `-workspace ${argv.scheme}.xcworkspace`,
-    `-configuration ${argv.configuration}`,
+    `-configuration ${ucfirst(argv.configuration)}`,
     'clean',
     'archive',
     `-archivePath build/${argv.scheme}.xcarchive`,
@@ -137,9 +137,6 @@ try {
       execSync(`rm build/${argv.scheme}.ipa`, { stdio: 'inherit' });
     }
   }
-
-  execSync('rm build/exportOptions.plist');
-  execSync(`rm -r build/${argv.scheme}.xcarchive`);
 
   if (!argv.upload) {
     const newFileName = `${argv.ipaName}-${argv.ipaSuffix}.ipa`;
