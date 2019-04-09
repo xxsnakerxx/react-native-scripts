@@ -91,5 +91,5 @@ try {
   console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {green Codepushed!}}`);
 } catch (error) {
   console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {red Codepushing failed}}`);
-  console.error(error);
+  throw error;
 }

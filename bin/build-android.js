@@ -84,5 +84,5 @@ try {
   }
 } catch (error) {
   console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {red Building failed}}`);
-  console.error(error);
+  throw error;
 }

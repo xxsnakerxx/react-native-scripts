@@ -52,5 +52,5 @@ try {
   console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {green Builded ./${argv.folder}/${filename}.map}}`);
 } catch (error) {
   console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {red Building failed}}`);
-  console.error(error);
+  throw error;
 }

@@ -45,5 +45,5 @@ try {
   linkAssets(platforms, project, assets);
 } catch (error) {
   console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {red Linking failed}}`);
-  console.error(error);
+  throw error;
 }

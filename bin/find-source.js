@@ -49,6 +49,6 @@ const searchColumn = +(argv.line.split(':')[1]);
     smc.destroy();
   } catch (error) {
     console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {red Something happend!}}`);
-    console.error(error);
+    throw error;
   }
 })();
