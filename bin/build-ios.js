@@ -26,7 +26,7 @@ const argv = require('yargs')
   .option('u', {
     alias: 'upload',
     describe: 'upload to app store',
-    type: 'string',
+    type: 'boolean',
   })
   .option('altoolUser', {
     describe: 'apple ID, required for uploading',

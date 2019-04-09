@@ -29,7 +29,7 @@ Options:
   --teamId             [string] [required]
   --scheme             [string] [required]
   -c, --configuration  [string] [required]
-  -u, --upload         upload to app store  [string]
+  -u, --upload         upload to app store  [boolean]
   --altoolUser         apple ID, required for uploading  [string]
   --altoolPass         app specific password (appleid.apple.com -> Security -> Generate Password), required for uploading  [string]
   --icloudEnv          value for iCloudContainerEnvironment key  [string] [default: "Production"]
