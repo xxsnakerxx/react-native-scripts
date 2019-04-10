@@ -19,6 +19,9 @@ console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {yellow Linking asset
 try {
   const dedupeAssets = assets => uniqBy(assets, asset => path.basename(asset));
 
+  // support monorepos with not hoisted react-native
+  module.paths.push(path.join(cwd, 'node_modules'));
+
   const getPlatforms = require('@react-native-community/cli/build/tools/getPlatforms').default;
   const getAssets = require('@react-native-community/cli/build/tools/getAssets').default;
   const getProjectConfig = require('@react-native-community/cli/build/commands/link/getProjectConfig').default;
