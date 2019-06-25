@@ -17,6 +17,11 @@ const argv = require('yargs')
       describe: 'gradle buildType',
       type: 'string',
   })
+  .option('u', {
+    alias: 'upload',
+    describe: 'upload to google play (via https://github.com/Triple-T/gradle-play-publisher)',
+    type: 'boolean',
+  })
   .option('s', {
       alias: 'sourcemap',
       default: true,
@@ -46,36 +51,44 @@ console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {yellow Building ${ar
 
 try {
   process.chdir('./android');
-  execSync(`./gradlew assemble${ucfirst(argv.type)}`, { stdio: 'inherit' });
 
-  const apksDirPath = path.resolve(path.join('./app/build/outputs/apk', argv.type));
+  if (argv.upload) {
+    execSync([
+      `./gradlew publish${ucfirst(argv.type)}Apk`,
+      `--track ${argv.type === 'release' ? 'production' : 'internal'}`,
+    ].join(' '), { stdio: 'inherit' });
+  } else {
+    execSync(`./gradlew assemble${ucfirst(argv.type)}`, { stdio: 'inherit' });
 
-  fs.readdirSync(path.resolve(cwd, apksDirPath))
-    .forEach((item) => {
-      const filename = path.join(apksDirPath, item);
-      const stat = fs.statSync(filename);
+    const apksDirPath = path.resolve(path.join('./app/build/outputs/apk', argv.type));
 
-      if (!stat.isDirectory() && filename.indexOf('.apk') > 0) {
-        const nameParts = filename.split('-');
-        let newFileName = filename;
+    fs.readdirSync(path.resolve(cwd, apksDirPath))
+      .forEach((item) => {
+        const filename = path.join(apksDirPath, item);
+        const stat = fs.statSync(filename);
 
-        // modulename-screendensityABI-buildvariant.apk
-        // it can be
-        // app-x-y-release.apk
-        // app-x-release.apk
-        // app-release.apk
-        if (nameParts.length >= 3) {
-          const splitType = nameParts.slice(1, -1).join('-');
-          newFileName = `${argv.apkName}-${splitType}-${argv.type}-${argv.apkSuffix}.apk`
-        } else {
-          newFileName = `${argv.apkName}-${argv.type}-${argv.apkSuffix}.apk`
+        if (!stat.isDirectory() && filename.indexOf('.apk') > 0) {
+          const nameParts = filename.split('-');
+          let newFileName = filename;
+
+          // modulename-screendensityABI-buildvariant.apk
+          // it can be
+          // app-x-y-release.apk
+          // app-x-release.apk
+          // app-release.apk
+          if (nameParts.length >= 3) {
+            const splitType = nameParts.slice(1, -1).join('-');
+            newFileName = `${argv.apkName}-${splitType}-${argv.type}-${argv.apkSuffix}.apk`
+          } else {
+            newFileName = `${argv.apkName}-${argv.type}-${argv.apkSuffix}.apk`
+          }
+
+          execSync(`mv ${filename} ./${newFileName}`);
+
+          console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {green Builded ./android/${newFileName}}}`);
         }
-
-        execSync(`mv ${filename} ./${newFileName}`);
-
-        console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {green Builded ./android/${newFileName}}}`);
-      }
-    });
+      });
+  }
 
   process.chdir('../');
 
