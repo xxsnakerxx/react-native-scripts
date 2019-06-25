@@ -1,6 +1,6 @@
 {
   "name": "@xxsnakerxx/react-native-scripts",
-  "version": "1.1.3",
+  "version": "1.2.0",
   "description": "Helpful scripts for React Native projects",
   "repository": "https://github.com/xxsnakerxx/react-native-scripts.git",
   "author": "Dmitriy Kolesnikov <xxsnakerxx@gmail.com>",
