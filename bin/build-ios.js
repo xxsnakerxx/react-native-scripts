@@ -65,8 +65,6 @@ const argv = require('yargs')
   .argv;
 
 const ucfirst = str => str.charAt(0).toUpperCase() + str.slice(1);
-const altool = '"/Applications/Xcode.app/Contents/Applications/Application Loader.app' +
-  '/Contents/Frameworks/ITunesSoftwareService.framework/Versions/A/Support/altool"';
 
 console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {yellow Building ${argv.scheme}...}}`);
 
@@ -118,7 +116,7 @@ try {
     console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {yellow Validating build...}}`);
 
     execSync([
-      `${altool} --validate-app`,
+      'xcrun altool --validate-app',
       `-f build/${argv.scheme}.ipa`,
       `-u ${argv.altoolUser}`,
       `-p ${argv.altoolPass}`,
@@ -128,7 +126,7 @@ try {
       console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {yellow Uploading...}}`);
 
       execSync([
-        `${altool} --upload-app`,
+        'xcrun altool --upload-app',
         `-f build/${argv.scheme}.ipa`,
         `-u ${argv.altoolUser}`,
         `-p ${argv.altoolPass}`,
