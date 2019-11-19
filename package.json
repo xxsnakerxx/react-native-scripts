@@ -14,7 +14,8 @@
     "rns-codepush": "./bin/codepush.js"
   },
   "scripts": {
-    "lint": "yarn eslint ."
+    "lint": "yarn eslint .",
+    "release": "yarn publish && git push && git push --tags"
   },
   "dependencies": {
     "chalk": "^2.4.2",
@@ -22,6 +23,6 @@
     "yargs": "^14.0.0"
   },
   "devDependencies": {
-    "eslint": "^6.5.1"
+    "eslint": "^6.6.0"
   }
 }
