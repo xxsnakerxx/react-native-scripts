@@ -19,8 +19,9 @@ try {
   const dedupeAssets = assets => uniqBy(assets, asset => path.basename(asset));
 
   const linkAssets = require('@react-native-community/cli/build/commands/link/linkAssets').default;
-  const cliEntry = require('@react-native-community/cli/build/cliEntry').default;
-  const { platforms, dependencies, project, assets } = cliEntry.loadConfig();
+  const loadConfig = require('@react-native-community/cli/build/tools/config').default;
+
+  const { platforms, dependencies, project, assets } = loadConfig();
 
   const allAssets = dedupeAssets(
     Object.keys(dependencies)

@@ -38,7 +38,7 @@ try {
   execSync(`mkdir -p ${cwd}/${argv.folder}`);
 
   execSync([
-    'node "node_modules/@react-native-community/cli" bundle',
+    'node "node_modules/react-native/cli.js" bundle',
     '--entry-file index.js',
     `--platform ${argv.platform}`,
     '--dev false',
