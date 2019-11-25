@@ -147,7 +147,11 @@ try {
   process.chdir('../');
 
   if (argv.sourcemap) {
-    execSync(`node ${__dirname}/build-sourcemap.js -p ios -e ${argv.configuration}`, { stdio: 'inherit' });
+    execSync([
+      `node ${__dirname}/build-sourcemap.js`,
+      '-p ios',
+      `-e ${argv.configuration}`,
+    ].join(' '), { stdio: 'inherit' });
   }
 } catch (error) {
   console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {red Building failed}}`);

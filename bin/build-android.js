@@ -93,7 +93,11 @@ try {
   process.chdir('../');
 
   if (argv.sourcemap) {
-    execSync(`node ${__dirname}/build-sourcemap.js -p android -e ${argv.type}`, { stdio: 'inherit' });
+    execSync([
+      `node ${__dirname}/build-sourcemap.js`,
+      '-p android',
+      `-e ${argv.type === 'release' ? 'production' : argv.type}`,
+    ].join(' '), { stdio: 'inherit' });
   }
 } catch (error) {
   console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {red Building failed}}`);
