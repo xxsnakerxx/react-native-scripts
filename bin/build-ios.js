@@ -66,10 +66,24 @@ const argv = require('yargs')
 
 const ucfirst = str => str.charAt(0).toUpperCase() + str.slice(1);
 
+const xcprettyIsAvailable = () => {
+  try {
+    execSync('xcpretty --version', {
+      stdio: [0, 'pipe', 'ignore']
+    });
+  } catch (error) {
+    return false;
+  }
+
+  return true;
+}
+
 console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {yellow Building ${argv.scheme}...}}`);
 
 try {
   process.chdir('./ios');
+
+  const useXcpretty = xcprettyIsAvailable();
 
   execSync([
     'xcodebuild',
@@ -80,7 +94,8 @@ try {
     'archive',
     `-archivePath build/${argv.scheme}.xcarchive`,
     `DEVELOPMENT_TEAM=${argv.teamId}`,
-  ].join(' '), { stdio: 'inherit' });
+    useXcpretty ? '| xcpretty' : ''
+  ].filter(Boolean).join(' '), { stdio: 'inherit' });
 
   fs.writeFileSync(
     'build/exportOptions.plist',
@@ -110,7 +125,8 @@ try {
     `-exportPath build`,
     '-exportOptionsPlist build/exportOptions.plist',
     '-allowProvisioningUpdates',
-  ].join(' '), { stdio: 'inherit' });
+    useXcpretty ? '| xcpretty' : '',
+  ].filter(Boolean).join(' '), { stdio: 'inherit' });
 
   if (argv.altoolUser && argv.altoolPass) {
     console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {yellow Validating build...}}`);
