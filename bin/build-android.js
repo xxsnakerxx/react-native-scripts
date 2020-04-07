@@ -17,6 +17,11 @@ const argv = require('yargs')
       describe: 'gradle buildType',
       type: 'string',
   })
+  .option('b', {
+      alias: 'bundle',
+      describe: 'build bundle instead of apk',
+      type: 'boolean',
+  })
   .option('u', {
     alias: 'upload',
     describe: 'upload to google play (via https://github.com/Triple-T/gradle-play-publisher)',
@@ -53,21 +58,31 @@ try {
   process.chdir('./android');
 
   if (argv.upload) {
+    const cmd = `publish${ucfirst(argv.type)}${argv.bundle ? 'Bundle' : 'Apk'}`;
+
+    console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {yellow Run ${cmd}...}}`);
+
     execSync([
-      `./gradlew publish${ucfirst(argv.type)}Apk`,
+      `./gradlew ${cmd}`,
       `--track ${argv.type === 'release' ? 'production' : 'internal'}`,
     ].join(' '), { stdio: 'inherit' });
   } else {
-    execSync(`./gradlew assemble${ucfirst(argv.type)}`, { stdio: 'inherit' });
+    const cmd = `${argv.bundle ? 'bundle' : 'assemble'}${ucfirst(argv.type)}`;
 
-    const apksDirPath = path.resolve(path.join('./app/build/outputs/apk', argv.type));
+    console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {yellow Run ${cmd}...}}`);
 
-    fs.readdirSync(path.resolve(cwd, apksDirPath))
+    execSync(`./gradlew ${cmd}`, { stdio: 'inherit' });
+
+    const filesDirPath = path.resolve(path.join(`./app/build/outputs/${argv.bundle ? 'bundle' : 'apk'}`, argv.type));
+
+    const fileExt = argv.bundle ? 'aab' : 'apk';
+
+    fs.readdirSync(path.resolve(cwd, filesDirPath))
       .forEach((item) => {
-        const filename = path.join(apksDirPath, item);
+        const filename = path.join(filesDirPath, item);
         const stat = fs.statSync(filename);
 
-        if (!stat.isDirectory() && filename.indexOf('.apk') > 0) {
+        if (!stat.isDirectory() && filename.indexOf(`.${fileExt}`) > 0) {
           const nameParts = filename.split('-');
           let newFileName = filename;
 
@@ -78,9 +93,9 @@ try {
           // app-release.apk
           if (nameParts.length >= 3) {
             const splitType = nameParts.slice(1, -1).join('-');
-            newFileName = `${argv.apkName}-${splitType}-${argv.type}-${argv.apkSuffix}.apk`
+            newFileName = `${argv.apkName}-${splitType}-${argv.type}-${argv.apkSuffix}.${fileExt}`
           } else {
-            newFileName = `${argv.apkName}-${argv.type}-${argv.apkSuffix}.apk`
+            newFileName = `${argv.apkName}-${argv.type}-${argv.apkSuffix}.${fileExt}`
           }
 
           execSync(`mv ${filename} ./${newFileName}`);
