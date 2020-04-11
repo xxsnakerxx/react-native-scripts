@@ -18,11 +18,11 @@
     "release": "yarn publish && git push && git push --tags"
   },
   "dependencies": {
-    "chalk": "^2.4.2",
+    "chalk": "^4.0.0",
     "source-map": "^0.7.3",
-    "yargs": "^14.0.0"
+    "yargs": "^15.3.1"
   },
   "devDependencies": {
-    "eslint": "^6.6.0"
+    "eslint": "^6.8.0"
   }
 }
