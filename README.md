@@ -14,6 +14,8 @@ Usage: yarn rns-build-android [options]
 
 Options:
   -t, --type       gradle buildType  [string] [required]
+  -b, --bundle     build bundle instead of APK  [boolean] [default: false]
+  -u, --upload     upload to google play  [boolean] [default: false]
   -s, --sourcemap  build sourcemap  [boolean] [default: true]
   --apkName        apk file name  [string] [default: package name]
   --apkSuffix      apk file suffix  [string] [default: package version]
@@ -29,7 +31,7 @@ Options:
   --teamId             [string] [required]
   --scheme             [string] [required]
   -c, --configuration  [string] [required]
-  -u, --upload         upload to app store  [boolean]
+  -u, --upload         upload to app store  [boolean] [default: false]
   --altoolUser         apple ID, required for uploading  [string]
   --altoolPass         app specific password (appleid.apple.com -> Security -> Generate Password), required for uploading  [string]
   --icloudEnv          value for iCloudContainerEnvironment key  [string] [default: "Production"]
