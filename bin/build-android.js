@@ -98,7 +98,7 @@ try {
             newFileName = `${argv.apkName}-${argv.type}-${argv.apkSuffix}.${fileExt}`
           }
 
-          execSync(`mv ${filename} ./${newFileName}`);
+          fs.renameSync(filename, path.resolve(`./${newFileName}`));
 
           console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {green Builded ./android/${newFileName}}}`);
         }

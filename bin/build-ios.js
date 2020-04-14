@@ -3,7 +3,9 @@
 const { execSync } = require('child_process');
 const cwd = process.cwd();
 const fs = require('fs');
+const path = require('path');
 const chalk = require('chalk');
+const rimraf = require('rimraf');
 const pkg = require(`${cwd}/package.json`);
 
 const scriptName = 'rns-build-ios';
@@ -148,14 +150,14 @@ try {
         `-p ${argv.altoolPass}`,
       ].join(' '), { stdio: 'inherit' });
 
-      execSync(`rm build/${argv.scheme}.ipa`, { stdio: 'inherit' });
+      rimraf.sync(path.resolve(`build/${argv.scheme}.ipa`));
     }
   }
 
   if (!argv.upload) {
     const newFileName = `${argv.ipaName}-${argv.ipaSuffix}.ipa`;
 
-    execSync(`mv build/${argv.scheme}.ipa ${newFileName}`, { stdio: 'inherit' });
+    fs.renameSync(path.resolve(`build/${argv.scheme}.ipa`), newFileName);
 
     console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {green Builded ./ios/${newFileName}}}`);
   }

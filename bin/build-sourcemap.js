@@ -2,7 +2,10 @@
 
 const { execSync } = require('child_process');
 const cwd = process.cwd();
+const fs = require('fs');
+const path = require('path');
 const chalk = require('chalk');
+const rimraf = require('rimraf');
 const pkg = require(`${cwd}/package.json`);
 
 const scriptName = 'rns-build-sourcemap';
@@ -35,7 +38,7 @@ console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {yellow Building ${ar
 const filename = `${argv.platform}.bundle-${pkg.version}-${argv.env}`;
 
 try {
-  execSync(`mkdir -p ${cwd}/${argv.folder}`);
+  fs.mkdirSync(path.resolve(`${cwd}/${argv.folder}`), {recursive: true})
 
   execSync([
     'node "node_modules/react-native/cli.js" bundle',
@@ -47,7 +50,7 @@ try {
     `--sourcemap-output ./${argv.folder}/${filename}.map`,
   ].join(' '), { stdio: 'inherit' });
 
-  execSync(`rm ./${argv.folder}/index.${filename}`);
+  rimraf.sync(path.resolve(`./${argv.folder}/index.${filename}`));
 
   console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {green Builded ./${argv.folder}/${filename}.map}}`);
 } catch (error) {
