@@ -57,6 +57,12 @@ console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {yellow Building ${ar
 try {
   process.chdir('./android');
 
+  console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {yellow Cleaning...}}`);
+
+  execSync('./gradlew clean', { stdio: 'inherit' });
+
+  console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {green Cleaned!}}`);
+
   if (argv.upload) {
     const cmd = `publish${ucfirst(argv.type)}${argv.bundle ? 'Bundle' : 'Apk'}`;
 
