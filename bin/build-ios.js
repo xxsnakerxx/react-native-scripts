@@ -92,6 +92,7 @@ try {
     `-scheme ${argv.scheme}`,
     `-workspace ${argv.scheme}.xcworkspace`,
     `-configuration ${ucfirst(argv.configuration)}`,
+    '-allowProvisioningUpdates',
     'clean',
     'archive',
     `-archivePath build/${argv.scheme}.xcarchive`,
