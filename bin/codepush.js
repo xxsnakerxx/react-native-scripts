@@ -33,6 +33,12 @@ const argv = require('yargs')
     describe: 'build sourcemap',
     type: 'boolean',
   })
+  .option('t', {
+    alias: 'tag',
+    default: true,
+    describe: 'set git tag "codepush-${platform}-${stg|prod}"',
+    type: 'boolean',
+  })
   .wrap(null)
   .version()
   .help('help')
@@ -54,6 +60,8 @@ try {
       'platform',
       's',
       'sourcemap',
+      't',
+      'tag',
       '$0',
       '_'
     ].indexOf(arg) < 0) {
@@ -67,6 +75,10 @@ try {
 
   if (argv.platform) {
     platforms = platforms.filter(item => item === argv.platform);
+  }
+
+  if (argv.tag) {
+    execSync('git fetch --tags -f', { stdio: 'inherit' });
   }
 
   platforms.forEach((platform) => {
@@ -83,10 +95,18 @@ try {
       .filter(Boolean)
       .join(' '), { stdio: 'inherit' });
 
+    if (argv.tag) {
+      execSync(`git tag codepush-${platform}-${argv.env.toLowerCase() === 'staging' ? 'stg' : 'prod'} -f`, { stdio: 'inherit' });
+    }
+
     if (argv.sourcemap) {
       execSync(`node ${__dirname}/build-sourcemap.js -p ${platform} -e ${argv.env}`, { stdio: 'inherit' });
     }
   });
+
+  if (argv.tag) {
+    execSync('git push --tags -f', { stdio: 'inherit' });
+  }
 
   console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {green Codepushed!}}`);
 } catch (error) {
