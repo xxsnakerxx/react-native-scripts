@@ -136,7 +136,8 @@ try {
 
     execSync([
       'xcrun altool --validate-app',
-      `-f build/${argv.scheme}.ipa`,
+      // `-f build/${argv.scheme}.ipa`,
+      `-f build/${argv.ipaName}.ipa`,
       `-u ${argv.altoolUser}`,
       `-p ${argv.altoolPass}`,
     ].join(' '), { stdio: 'inherit' });
@@ -146,7 +147,8 @@ try {
 
       execSync([
         'xcrun altool --upload-app',
-        `-f build/${argv.scheme}.ipa`,
+        // `-f build/${argv.scheme}.ipa`,
+        `-f build/${argv.ipaName}.ipa`,
         `-u ${argv.altoolUser}`,
         `-p ${argv.altoolPass}`,
       ].join(' '), { stdio: 'inherit' });
@@ -158,7 +160,8 @@ try {
   if (!argv.upload) {
     const newFileName = `${argv.ipaName}-${argv.ipaSuffix}.ipa`;
 
-    fs.renameSync(path.resolve(`build/${argv.scheme}.ipa`), newFileName);
+    // fs.renameSync(path.resolve(`build/${argv.scheme}.ipa`), newFileName);
+    fs.renameSync(path.resolve(`build/${argv.ipaName}.ipa`), newFileName);
 
     console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {green Builded ./ios/${newFileName}}}`);
   }
