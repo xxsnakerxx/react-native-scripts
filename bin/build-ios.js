@@ -153,7 +153,8 @@ try {
         `-p ${argv.altoolPass}`,
       ].join(' '), { stdio: 'inherit' });
 
-      rimraf.sync(path.resolve(`build/${argv.scheme}.ipa`));
+      // rimraf.sync(path.resolve(`build/${argv.scheme}.ipa`));
+      rimraf.sync(path.resolve(`build/${argv.ipaName}.ipa`));
     }
   }
 
