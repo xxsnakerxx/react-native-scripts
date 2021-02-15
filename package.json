@@ -1,9 +1,10 @@
 {
   "name": "@xxsnakerxx/react-native-scripts",
-  "version": "5.2.1",
+  "version": "5.2.2",
   "description": "Helpful scripts for React Native projects",
   "repository": "https://github.com/xxsnakerxx/react-native-scripts.git",
   "author": "Dmitriy Kolesnikov <xxsnakerxx@gmail.com>",
+  "maintainers": ["Dmitriy Kolesnikov <xxsnakerxx@gmail.com>", "Butakov Igor <butakov.igor@team55.ru>"],
   "license": "MIT",
   "bin": {
     "rns-build-ios": "./bin/build-ios.js",
@@ -11,7 +12,8 @@
     "rns-build-sourcemap": "./bin/build-sourcemap.js",
     "rns-find-source": "./bin/find-source.js",
     "rns-link-assets": "./bin/link-assets.js",
-    "rns-codepush": "./bin/codepush.js"
+    "rns-codepush": "./bin/codepush.js",
+    "rns-appcenter-codepush": "./bin/appcenter-codepush.js"
   },
   "scripts": {
     "lint": "yarn eslint .",

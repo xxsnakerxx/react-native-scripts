@@ -96,6 +96,7 @@ try {
     'clean',
     'archive',
     `-archivePath build/${argv.scheme}.xcarchive`,
+    `-destination 'generic/platform=iOS'`,
     `DEVELOPMENT_TEAM=${argv.teamId}`,
     useXcpretty ? '| xcpretty' : ''
   ].filter(Boolean).join(' '), { stdio: 'inherit' });
@@ -125,6 +126,7 @@ try {
     'xcodebuild',
     '-exportArchive',
     `-archivePath build/${argv.scheme}.xcarchive`,
+    `-destination 'generic/platform=iOS'`,
     `-exportPath build`,
     '-exportOptionsPlist build/exportOptions.plist',
     '-allowProvisioningUpdates',
