@@ -36,8 +36,13 @@ let platforms = ['ios', 'android'];
 const argv = require('yargs')
   .usage(`Usage: yarn ${scriptName} [options] [code-push cli options]
        run "appcenter code-push release-react --help" to see other available code-push options`)
+  .option('owner', {
+    describe: 'ownerName',
+    demandOption: true,
+    type: 'string',
+  })
   .option('app', {
-    describe: '<ownerName>/<appName>',
+    describe: 'appName',
     demandOption: true,
     type: 'string',
   })
@@ -59,12 +64,6 @@ const argv = require('yargs')
     describe: 'build sourcemap',
     type: 'boolean',
   })
-  // .option('sd', {
-  //   alias: 'sourcemap_dir',
-  //   default: true,
-  //   describe: 'build sourcemap',
-  //   type: 'boolean',
-  // })
   .option('t', {
     alias: 'tag',
     default: true,
@@ -122,7 +121,7 @@ try {
 
     execSync([
       'appcenter codepush release-react',
-      `${argv.app}-${platform} ${platform}`,
+      `${argv.owner}/${argv.app}-${platform} ${platform}`,
       `--deploymentName ${ucfirst(argv.env)}`,
     ]
       .concat(Object.keys(codepushArgs)
