@@ -79,11 +79,15 @@ const ucfirst = str => str.charAt(0).toUpperCase() + str.slice(1);
 
 console.log(chalk`{whiteBright.bold [{cyan ${scriptName}}] {yellow Codepushing ${argv.app} app on ${argv.env} for ${platforms.join(', ')}...}}`);
 
+// console.warn(argv);
+
 try {
   const codepushArgs = {};
 
   Object.keys(argv).forEach((arg) => {
     if ([
+      'targetBinaryVersion', /** fix for camelCaseCommands */
+      'owner',
       'app',
       'e',
       'env',
@@ -108,6 +112,9 @@ try {
   //   codepushArgs['--sourcemap-output'] = `${argv.sd}/${platform} ${platform}`
   // }
 
+
+  // console.warn(codepushArgs);
+
   if (argv.platform) {
     platforms = platforms.filter(item => item === argv.platform);
   }
@@ -121,8 +128,9 @@ try {
 
     execSync([
       'appcenter codepush release-react',
-      `${argv.owner}/${argv.app}-${platform} ${platform}`,
-      `--deploymentName ${ucfirst(argv.env)}`,
+      // `${argv.owner}/${argv.app}-${platform} ${platform}`,
+      `--app ${argv.owner}/${argv.app}-${platform}`,
+      `--deployment-name ${ucfirst(argv.env)}`,
     ]
       .concat(Object.keys(codepushArgs)
         .map(arg => `${arg}${codepushArgs[arg] || ''}`)
