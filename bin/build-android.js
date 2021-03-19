@@ -87,16 +87,21 @@ try {
       .forEach((item) => {
         const filename = path.join(filesDirPath, item);
         const stat = fs.statSync(filename);
-
         if (!stat.isDirectory() && filename.indexOf(`.${fileExt}`) > 0) {
-          const nameParts = filename.split('-');
+          let nameParts = filename.split('-');
           let newFileName = filename;
-
           // modulename-screendensityABI-buildvariant.apk
           // it can be
           // app-x-y-release.apk
           // app-x-release.apk
           // app-release.apk
+
+          //clean array
+          let startIndex = nameParts.findIndex(e=>e.includes('/app'));
+          if(startIndex>0) {
+            nameParts = nameParts.slice(startIndex, -1);
+          }
+
           if (nameParts.length >= 3) {
             const splitType = nameParts.slice(1, -1).join('-');
             newFileName = `${argv.apkName}-${splitType}-${argv.type}-${argv.apkSuffix}.${fileExt}`
