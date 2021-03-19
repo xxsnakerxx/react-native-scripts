@@ -99,7 +99,7 @@ try {
           //clean array
           let startIndex = nameParts.findIndex(e=>e.includes('/app'));
           if(startIndex>0) {
-            nameParts = nameParts.slice(startIndex, -1);
+            nameParts = nameParts.slice(startIndex);
           }
 
           if (nameParts.length >= 3) {
